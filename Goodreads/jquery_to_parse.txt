@@ -1,0 +1,26 @@
+console.log("BookId,Title,Author,Rating");
+var books = $('booksBody').children;
+for (i = 0; i<books.length; i++ ) {
+	var title = books[i].children[3].children[1].children[0].text.trim().replace("\n"," ").replace(/\s\s+/g, ' ').replace(","," "); 
+	var author = books[i].children[4].children[1].children[0].text.trim().replace(",",""); 
+	var rating = books[i].children[13].children[1].children[0].text.trim().replace(" of 5 stars","");
+	var bookid = books[i].children[3].children[1].children[0].getAttribute('href').replace(/\D+/g, "")
+	if (rating>0)	console.log(bookid+","+title+","+author+","+rating); 
+} 
+
+console.log("BookId,Title,Author,Rating");
+var books = $('booksBody').children;
+for (i = 0; i<books.length; i++ ) {
+	var title = books[i].children[3].children[1].children[0].text.trim().replace("\n"," ").replace(/\s\s+/g, ' ').replace(","," "); 
+	var author = books[i].children[4].children[1].children[0].text.trim().replace(",",""); 
+	var rating = 0;
+	var mulrates = books[i].children[13].children[1].children[0].children;
+	var j=0;
+	for(j=0;j<5;j++) {
+		if(mulrates[j].text.indexOf("[")>-1) {
+			rating = mulrates[j].text.charAt(2);
+		}
+	}
+	var bookid = books[i].children[3].children[1].children[0].getAttribute('href').replace(/\D+/g, "")
+	if (rating>0)	console.log(bookid+","+title+","+author+","+rating); 
+} 
