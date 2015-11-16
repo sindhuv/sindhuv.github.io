@@ -31,7 +31,7 @@ crawl <- function(seed.page = "/wiki/Universe", n=2){
 
 store.urlwords <- function(values.df){ #should have a column named url
   ignore.words <- c("the","of","to","and","a","in","is","it")
-  con <- dbConnect(MySQL(), user = 'sindhu', password = 'sindhu54', host = 'localhost', dbname='wikipedia') 
+  con <- dbConnect(MySQL(), user = '<username>', password = '<password>', host = 'localhost', dbname='wikipedia') 
   success <- dbWriteTable(conn=con, name='urls', value=values.df, append = TRUE, row.names = FALSE, quote='\'')
   if(success){
     for(url in values.df$url){
