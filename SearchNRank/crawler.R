@@ -31,12 +31,12 @@ crawl <- function(seed.page = "/wiki/Universe", n=2){
 
 store.urlwords <- function(values.df){ #should have a column named url
   ignore.words <- c("the","of","to","and","a","in","is","it")
-  con.wikipedia <- dbConnect(MySQL(), user = 'sindhu', password = 'sindhu54', host = 'localhost', dbname='wikipedia') 
-  success <- dbWriteTable(conn=con, name='urls', value=opdf, append = TRUE, row.names = FALSE, quote='\'')
+  con <- dbConnect(MySQL(), user = 'sindhu', password = 'sindhu54', host = 'localhost', dbname='wikipedia') 
+  success <- dbWriteTable(conn=con, name='urls', value=values.df, append = TRUE, row.names = FALSE, quote='\'')
   if(success){
     for(url in values.df$url){
-      text <- read_html(url) %>% html_nodes(xpath = "//html/body/div[@id = 'content']/div[@id = 'bodyContent']//div[@id = 'mw-content-text']") %>% html_text() %>% gsub(pattern="[\n\t]+",replacement=" ",x=.) %>% gsub(pattern="[()\"\\]", replacement="", x=.)
-      b <- as.data.frame(unlist(strsplit(a,split=" ")))
+      text <- read_html(url) %>% html_nodes(xpath = "//html/body/div[@id = 'content']/div[@id = 'bodyContent']//div[@id = 'mw-content-text']") %>% html_text() %>% gsub(pattern="[\n\t]+",replacement=" ",x=.) %>% gsub(pattern="[(),;':@#$%^&*\"\\]", replacement="", x=.)
+      b <- as.data.frame(unlist(strsplit(text,split=" ")))
       names(b) <- c("word")
       b <- subset(b, (!b$word %in% ignore.words))
       success <- success & dbWriteTable(conn=con, name="words", value = b, append=TRUE, row.names=FALSE, quote='\'')
@@ -47,5 +47,6 @@ store.urlwords <- function(values.df){ #should have a column named url
 
 print(Sys.time())
 op <- crawl()
+print(Sys.time())
 suc <- store.urlwords(op)
 print(Sys.time())
