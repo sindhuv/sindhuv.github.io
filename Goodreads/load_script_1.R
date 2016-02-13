@@ -52,11 +52,11 @@ Pearson <- c()
 Sorensen_Dist <- c()
 Sor_var <- c()
 
-SINDHU <- -1
+YOU <- -1
 
 for(j in 1:(N-1)){
   if(!is.na(pmatch("sindhuja", ratings.files[j]))){
-    SINDHU <- j
+    YOU <- j
   }
   for(k in (j+1):N){
     R1 <- c(R1, j)
@@ -77,11 +77,11 @@ for(j in 1:(N-1)){
 }
 
 if(!is.na(pmatch("sindhuja", ratings.files[N]))){
-  SINDHU <- N
+  YOU <- N
 }
 
 output.corrs <- data.frame(R1, R2, Euclidean, Pearson, Sorensen_Dist, Sor_var)
 write.csv(output.corrs,"D:/output.csv")
 setwd(old_dir)
 remove(i,j,k,N,df, Pearson, Euclidean, R1, R2)
-recommendations(dfs.ratings, SINDHU, output.corrs)
+recommendations(dfs.ratings, YOU, output.corrs)
