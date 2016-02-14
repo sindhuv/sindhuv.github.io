@@ -1,8 +1,8 @@
-euclidean <- function (df1, df2, groupBy='BookId') #each data frame contains 2 columns: Data to be rated, rating. Each df corresponds to a user.
+euclidean <- function (df1, df2, groupBy='BookId') 
+  #each data frame contains 2 columns: Data to be rated, rating. Each df corresponds to a user.
 {
   score <- 0.0
-  dfs <- merge(df1,df2,by=groupBy)
-  #print(dfs)
+  dfs <- merge(df1,df2,by.x=groupBy, by.y = groupBy)
   if(nrow(dfs) == 0){
     return(0)
   }

@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyBS)
 
 # Define UI for dataset viewer application
 shinyUI(fluidPage(
@@ -11,15 +12,19 @@ shinyUI(fluidPage(
     sidebarPanel(
       selectInput("user.number", "Choose a user:", 
                   choices = c(1,2,3,4,5,6,7,8,9)),
-      actionButton("load.recos", "Recos", width='100px'),
-      actionButton("under.the.hoods", "Under the hood", width = '100px'),
-      hr()
+      hr(),
+      actionButton("user.load.recos.p", "Recos", width='100px'),
+      actionButton("user.load.recos.n", "Non Recos", width='100px'),
+      br(),
+      br(),
+      actionButton("user.under.hoods", "Under the hood", width = '200px')
     ),
     
     # Show a summary of the dataset and an HTML table with the 
     # requested number of observations
     mainPanel(
-      dataTableOutput('user.correlation')
+      verbatimTextOutput('user.text'),
+      dataTableOutput('user.output')
     )
   )
 ))

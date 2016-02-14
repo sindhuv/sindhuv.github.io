@@ -15,8 +15,9 @@
 recommendations <- function(dfs.ratings, person.index, output.corrs, 
                             candidate.choice.count = FALSE,
                             required.reco.count = 5, 
-                            max.metric.reject = 0.3, min.metric.reject = 0.7, 
-                            metic = "Pearson"){ 
+                            max.metric.reject = 0.3, 
+                            min.metric.reject = 0.7, 
+                            metric = 'Pearson'){ 
   ## return recommendations of titleids!
   reco.books <- dfs.ratings[dfs.ratings$Index != person.index, ]
   reco.books <- merge(reco.books, output.corrs, by.x =c("Index"), by.y = c("R1"),all.x=TRUE)
@@ -34,8 +35,12 @@ recommendations <- function(dfs.ratings, person.index, output.corrs,
   reco.book.details <- na.omit(dfs.ratings[,c("BookId","Title","Author")])
   reco.book.details <- unique(reco.book.details)
   output <- merge(reco.book.details,pivoted.prod[,c("BookId","Value")],by="BookId",all.x = TRUE)
-  remove(pivoted.prod, pivoted.pearson, pivoted.ratings)
-  return(list(couldreads = head(output,required.reco.count), maybelaters = tail(output, required.reco.count)))
+  return(
+    list(
+      couldreads = head(output,required.reco.count), 
+      maybelaters = tail(output, required.reco.count)
+    )
+  )
 }
 
 ## Example Usage:
